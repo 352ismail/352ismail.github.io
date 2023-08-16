@@ -109,8 +109,8 @@
                                 <div class="extra-space-l"></div>
                             </div>
 							<div class="item">
-								<h1>DOT NET Developer</h1>
-								<p>Skilled professional proficient in .NET framework development.</p>
+								<h4 id="quoteDisplay"></h4>
+								<h6 id="authorDisplay"></h6>
                                 <div class="extra-space-l"></div>							
 							</div>
 							<div class="item">
@@ -691,8 +691,114 @@
                                               
         </div><!-- body ends -->
         
-        
-        
+        <!--Fetch Quote Api-->>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var categories = [
+                'age',
+                'alone',
+                'amazing',
+                'anger',
+                'architecture',
+                'art',
+                'attitude',
+                'beauty',
+                'best',
+                'birthday',
+                'business',
+                'car',
+                'change',
+                'communications',
+                'computers',
+                'cool',
+                'courage',
+                'dad',
+                'dating',
+                'death',
+                'design',
+                'dreams',
+                'education',
+                'environmental',
+                'equality',
+                'experience',
+                'failure',
+                'faith',
+                'family',
+                'famous',
+                'fear',
+                'fitness',
+                'food',
+                'forgiveness',
+                'freedom',
+                'friendship',
+                'funny',
+                'future',
+                'god',
+                'good',
+                'government',
+                'graduation',
+                'great',
+                'happiness',
+                'health',
+                'history',
+                'home',
+                'hope',
+                'humor',
+                'imagination',
+                'inspirational',
+                'intelligence',
+                'jealousy',
+                'knowledge',
+                'leadership',
+                'learning',
+                'legal',
+                'life',
+                'love',
+                'marriage',
+                'medical',
+                'men',
+                'mom',
+                'money',
+                'morning',
+                'movies',
+                'success'
+                ];
+                var apiKey = 'q8hptihQxfzWvkwHp4Va2tup6QmuZJFPCDQ6Bgjb';
+                var ninjaApiBaseUrl = 'https://api.api-ninjas.com/v1/';
+                var qoutes = 'quotes';
+                var category = 'category'; 
+                function fetchQuote() {
+                    var randomCategory = categories[Math.floor(Math.random() * categories.length)];
+    
+                    $.ajax({
+                        method: 'GET',
+                        url: `${ninjaApiBaseUrl}${qoutes}?${category}=${randomCategory}`,
+                        headers: { 'X-Api-Key': apiKey },
+                        contentType: 'application/json',
+                        success: function(result) {
+                            if (result.length > 0) {
+                                var quote = result[0].quote;
+                                var author = result[0].author;
+                                var category = result[0].category;
+                                $('#quoteDisplay').text(quote);
+                                $('#authorDisplay').text( author);
+                            } else {
+                                $('#quoteDisplay').text('No quotes found for category: ' + randomCategory);
+                                $('#authorDisplay').text('');
+                            }
+                        },
+                        error: function ajaxError(jqXHR) {
+                            console.error('Error: ', jqXHR.responseText);
+                        }
+                    });
+                }
+    
+                fetchQuote();
+                // Auto Call After 10 minutes
+                setInterval(fetchQuote, 600000);
+            });
+        </script>
         
         <!-- Plugins JS -->
 		<script src="inc/jquery/jquery-1.11.1.min.js"></script>
